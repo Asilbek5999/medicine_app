@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'medicines',
     'regions',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

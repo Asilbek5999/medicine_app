@@ -3,14 +3,14 @@ from django.db import models
 
 class Medicine(models.Model):
     class MedicineType(models.TextChoices):
-        TABLET = "TABLET", "Tablet"
-        SYRUP = "SYRUP", "Syrup"
-        CAPSULE = "CAPSULE", "Capsule"
-        OTHER = "OTHER", "Other"
+        Tablet = "Tablet"
+        Syrup = "Syrup"
+        Capsule = "Capsule"
+        Other = "Other"
 
     medicine_type = models.CharField(choices=MedicineType.choices,
                                      max_length=15,
-                                     default=MedicineType.OTHER)
+                                     default=MedicineType.Other)
 
     title = models.CharField(max_length=255)
     manufacturer = models.CharField(max_length=255)
@@ -18,6 +18,7 @@ class Medicine(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
 
 
 class Pharmacy(models.Model):
@@ -39,6 +40,10 @@ class Pharmacy(models.Model):
         return f"{self.name}"
 
 
+class PharmacyMedicineManager(models.Manager):
+    pass
+
+
 class PharmacyMedicine(models.Model):
     pharmacy = models.ForeignKey(Pharmacy,
                                  on_delete=models.CASCADE,
@@ -47,3 +52,5 @@ class PharmacyMedicine(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name="pharmacy_medicine")
     price = models.DecimalField(max_digits=13, decimal_places=2)
+
+    objects = PharmacyMedicineManager()
