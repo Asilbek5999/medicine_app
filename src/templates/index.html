@@ -5,23 +5,17 @@
     <div class="row">
         <div class="col-sm-12 col-lg-6">
             <label>Region</label>
-            <select class="form-control">
+            <select class="form-control" id="region">
                 <option>All</option>
-                <option>Berlin</option>
-                <option>London</option>
-                <option>Madrid</option>
-                <option>New York</option>
-                <option>Paris</option>
+                {% for region in regions %}
+                    <option value="{{ region.id }}">{{region.name}}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="col-sm-12 col-lg-6">
             <label>District</label>
-            <select class="form-control">
-                <option>Any</option>
-                <option>Delivered</option>
-                <option>Shipped</option>
-                <option>Pending</option>
-                <option>Cancelled</option>
+            <select class="form-control" id="district">
+
             </select>
         </div>
         <div class="col-sm-12 d-flex justify-content-center my-3">
@@ -68,4 +62,7 @@
     {% include "pagination.html" %}
 
 </div>
+{% endblock %}
+{% block additional_js %}
+  <script src="{% static "local/js/district_list.js" %}"></script>
 {% endblock %}

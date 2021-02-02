@@ -11,14 +11,13 @@ class Medicine(models.Model):
     medicine_type = models.CharField(choices=MedicineType.choices,
                                      max_length=15,
                                      default=MedicineType.Other)
-
+    barcode = models.CharField(max_length=255, unique=True)
     title = models.CharField(max_length=255)
     manufacturer = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.title}"
-
 
 
 class Pharmacy(models.Model):
@@ -52,5 +51,5 @@ class PharmacyMedicine(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name="pharmacy_medicine")
     price = models.DecimalField(max_digits=13, decimal_places=2)
-
+    available = models.BooleanField(default=True)
     objects = PharmacyMedicineManager()
