@@ -15,7 +15,7 @@ function set_district() {
 }
 
 
-set_district();
+// set_district();
 
 id_region.addEventListener("change", function (e) {
     set_district();

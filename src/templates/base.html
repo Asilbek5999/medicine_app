@@ -26,8 +26,17 @@
     <div class="table-title">
         <div class="container">
             <div class="row justify-content-between align-items-center">
-                <h3 class="text-white">Logo <b>logo</b></h3>
-                <span class="phone-number"><i class="fa fa-phone"> </i>  +998 90 <strong>000-00-00</strong></span>
+                <a href="{% url "medicines:list" %}"><h3 class="text-white">Logo <b>logo</b></h3></a>
+                <div class="mr-4 d-flex align-items-center">
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_staff %}
+                        <a class="text-white mt-0 mr-4" href="{% url "admin:index" %}">Admin Page</a>
+                    {% endif %}
+                    <a class="text-white mt-2" href="{% url "logout" %}"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+                {% else %}
+                    <a class="text-white" href="{% url "login" %}"><i class="fas fa-sign-in-alt fa-2x"></i></a>
+                {% endif %}
+                    </div>
             </div>
         </div>
     </div>

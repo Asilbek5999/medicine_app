@@ -1,28 +1,22 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block content %}
-<form>
+<form method="get">
     <div class="row">
         <div class="col-sm-12 col-lg-6">
             <label>Region</label>
-            <select class="form-control" id="region">
-                <option>All</option>
-                {% for region in regions %}
-                    <option value="{{ region.id }}">{{region.name}}</option>
-                {% endfor %}
-            </select>
+
+            {{ filter.form.regions }}
         </div>
         <div class="col-sm-12 col-lg-6">
             <label>District</label>
-            <select class="form-control" id="district">
-
-            </select>
+            {{ filter.form.districts }}
         </div>
         <div class="col-sm-12 d-flex justify-content-center my-3">
-
-            <input type="text" class="form-control mx-0 search-input"
-                   placeholder="Enter medicine name">
-            <button type="button"
+                {{ filter.form.title }}
+            <button type="submit"
                     class="btn btn-danger mx-1 search-button"><i
                     class="fa fa-search"></i></button>
         </div>
@@ -35,12 +29,12 @@
         <tr>
             <th>#</th>
             <th>Medicine</th>
-            <th>Manufacturer</th>
+             <th>Type</th>
             <th>Pharmacy</th>
-
-            <th>Location</th>
-            <th>Type</th>
+            <th>Phone Number</th>
             <th>Price</th>
+            <th>Location</th>
+            <th>Working hours</th>
         </tr>
         </thead>
         <tbody>
@@ -48,13 +42,23 @@
         <tr>
             <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
             <td>{{object.medicine.title}}</td>
-            <td>{{object.medicine.manufacturer}}</td>
-            <td>{{object.pharmacy.name}}</td>
-            <td>{{object.pharmacy.district.name}}</td>
             <td>{{object.medicine.medicine_type}}</td>
-            <td>${{object.price}}</td>
+            <td>{{object.pharmacy.name}}</td>
+            <td>{{object.pharmacy.phone_number}}</td>
+            <td>{{object.price}}</td>
+            <td>{{object.pharmacy.district.name}}</td>
+            {% if object.pharmacy.works_day_and_night %}
+                <td>24/7</td>
+            {% else %}
+                <td>{{object.pharmacy.work_from}}-{{object.pharmacy.work_to}}</td>
+            {% endif %}
+
 
         </tr>
+        {% empty %}
+         <tr>
+             <td colspan="7"><h3>Sorry Medicine Not found</h3></td>
+         </tr>
         {% endfor%}
 
         </tbody>

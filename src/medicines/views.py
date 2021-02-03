@@ -1,17 +1,14 @@
-from django.views.generic import ListView
-
-from regions.models import Region
+from django_filters.views import FilterView
+from .filters import MedicineFilter
 from .models import PharmacyMedicine
 
-
-class MedicineList(ListView):
-    paginate_by = 1
+class MedicineList(FilterView):
+    paginate_by = 100
     template_name = "index.html"
+    filterset_class = MedicineFilter
 
     def get_queryset(self):
-        return PharmacyMedicine.objects.select_related("medicine", "pharmacy").order_by("-price")
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data()
-        context["regions"] = Region.objects.all().order_by("-id")
-        return context
+        return PharmacyMedicine.objects.select_related("medicine",
+                                                       "pharmacy",
+                                                       "pharmacy__district") \
+            .order_by("-price")
