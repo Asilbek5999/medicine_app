@@ -35,6 +35,7 @@
             <th>Price</th>
             <th>Location</th>
             <th>Working hours</th>
+            <th>Detail</th>
         </tr>
         </thead>
         <tbody>
@@ -52,6 +53,7 @@
             {% else %}
                 <td>{{object.pharmacy.work_from}}-{{object.pharmacy.work_to}}</td>
             {% endif %}
+            <td><a href="{% url "medicines:detail" object.pk %}"><i class="fas fa-info-circle"></i></a></td>
 
 
         </tr>

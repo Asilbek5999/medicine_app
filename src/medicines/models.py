@@ -29,7 +29,7 @@ class Pharmacy(models.Model):
     address = models.CharField(max_length=255)
     works_from = models.TimeField(blank=True, null=True)
     works_to = models.TimeField(blank=True, null=True)
-    works_day_and_night = models.BooleanField(default=False)
+    works_day_and_night = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Pharmacy"
@@ -40,7 +40,9 @@ class Pharmacy(models.Model):
 
 
 class PharmacyMedicineManager(models.Manager):
-    pass
+    def get_pharmacy_and_medicine(self):
+        return self.select_related("medicine", "pharmacy",
+                                   "pharmacy__district").order_by("-price")
 
 
 class PharmacyMedicine(models.Model):
